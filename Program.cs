@@ -1,0 +1,20 @@
+using New_Overlay_GUI;
+using System;
+using System.Windows.Forms;
+
+namespace New_Overlay_GUI
+{
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // Create and show the form
+            Form1 form = new Form1();
+            Application.Run(form);
+        }
+    }
+}
