@@ -11,14 +11,10 @@ namespace New_Overlay_GUI
         private ComboBox cboOverlayImage;
         private Image baseImage;
         private object overlayImagePath;
-        private Button btnUp;
-        private Button btnDown;
-
         public PosterOverlay()
         {
             NewMethod();
         }
-
         private void NewMethod()
         {
             InitializeComponent();
