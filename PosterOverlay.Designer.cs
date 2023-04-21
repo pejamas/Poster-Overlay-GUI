@@ -1,6 +1,6 @@
 ﻿namespace New_Overlay_GUI
 {
-    partial class Form1
+    partial class PosterOverlay
     {
         /// <summary>
         ///  Required designer variable.
@@ -30,14 +30,14 @@
         {
             SuspendLayout();
             // 
-            // Form1
+            // PosterOverlay
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(539, 877);
-            Name = "Form1";
-            Text = "Auto Overlay";
-            Load += Form1_Load;
+            Name = "Poster Overlay";
+            Text = "Poster Overlay";
+            Load += PosterOverlay_Load;
             ResumeLayout(false);
         }
 

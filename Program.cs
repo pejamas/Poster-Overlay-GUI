@@ -13,7 +13,7 @@ namespace New_Overlay_GUI
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Create and show the form
-            Form1 form = new Form1();
+            PosterOverlay form = new PosterOverlay();
             Application.Run(form);
         }
     }

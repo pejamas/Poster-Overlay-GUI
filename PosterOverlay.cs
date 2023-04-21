@@ -5,11 +5,16 @@ using System.Windows.Forms;
 
 namespace New_Overlay_GUI
 {
-    public partial class Form1 : Form
+    public partial class PosterOverlay : Form
     {
         private PictureBox pbResultImage;
         private ComboBox cboOverlayImage;
-        public Form1()
+        private Image baseImage;
+        private object overlayImagePath;
+        private Button btnUp;
+        private Button btnDown;
+
+        public PosterOverlay()
         {
             NewMethod();
         }
@@ -27,6 +32,7 @@ namespace New_Overlay_GUI
             cboOverlayImage.Items.Add("4K with DV");
             cboOverlayImage.Items.Add("4K with HDR");
             cboOverlayImage.Items.Add("4K with HDR and IMAX");
+            cboOverlayImage.Items.Add("4K with no HDR");
             cboOverlayImage.Size = new Size(160, 23);
             cboOverlayImage.Location = new Point(193, 17);
             cboOverlayImage.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -55,6 +61,7 @@ namespace New_Overlay_GUI
             pbResultImage.SizeMode = PictureBoxSizeMode.Zoom;
             pbResultImage.Size = new Size(502, 755);
             pbResultImage.Location = new Point(23, 60);
+            pbResultImage.BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(pbResultImage);
 
             // Create save button
@@ -73,7 +80,7 @@ namespace New_Overlay_GUI
             Button btnReset = new Button();
             btnReset.Text = "Reset";
             btnReset.Size = cboOverlayImage.Size;
-            btnReset.Location = new Point(167, 842);
+            btnReset.Location = new Point(190, 842);
             btnReset.BackColor = Color.LightGray;
             btnReset.ForeColor = Color.Black;
             btnReset.Font = new Font("Arial", 10, FontStyle.Regular);
@@ -84,6 +91,14 @@ namespace New_Overlay_GUI
             // Handle combo box selection changed event
             cboOverlayImage.SelectedIndexChanged += new EventHandler(cboOverlayImage_SelectedIndexChanged);
 
+        }
+        private void pbResultImage_Paint(object sender, PaintEventArgs e)
+        {
+            // Define border color and width
+            Pen borderPen = new Pen(Color.White, 10);
+
+            // Draw border
+            e.Graphics.DrawRectangle(borderPen, new Rectangle(pbResultImage.Location, pbResultImage.Size));
         }
         private void btnReset_Click(object sender, EventArgs e)
         {
@@ -131,6 +146,9 @@ namespace New_Overlay_GUI
                 case 3:
                     overlayFilename = @"E:\Plex Posters\4k\Overlays\4K-HDR with Imax.png";
                     break;
+                case 4:
+                    overlayFilename = @"E:\Plex Posters\4k\Overlays\4K no HDR.png";
+                    break;
             }
 
             if (overlayFilename != "")
@@ -164,17 +182,45 @@ namespace New_Overlay_GUI
 
         private void btnSaveImage_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "JPEG Image|*.jpg|PNG Image|*.png";
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            // Check if both base image and overlay image have been selected
+            if (baseImage == null || overlayImagePath == null)
             {
-                string extension = System.IO.Path.GetExtension(saveFileDialog.FileName).ToLower();
-                ImageFormat format = extension == ".jpg" ? ImageFormat.Jpeg : ImageFormat.Png;
-                pbResultImage.Image.Save(saveFileDialog.FileName, format);
+                MessageBox.Show("Please select a base image and overlay image.", "Error");
+                return;
             }
+
+            // Load overlay image
+            Image overlayImage = Image.FromFile((string)overlayImagePath);
+
+            // Calculate position of overlay image within result image
+            int overlayX = (pbResultImage.Width - overlayImage.Width) / 2;
+            int overlayY = (pbResultImage.Height - overlayImage.Height) / 2;
+
+            // Create new bitmap to draw overlay and base image onto
+            Bitmap resultBitmap = new Bitmap(pbResultImage.Width, pbResultImage.Height);
+
+            // Draw overlay onto result bitmap
+            using (Graphics g = Graphics.FromImage(resultBitmap))
+            {
+                g.DrawImage(overlayImage, overlayX, overlayY);
+            }
+
+            // Calculate position of base image within result image
+            int baseX = (pbResultImage.Width - baseImage.Width) / 2;
+            int baseY = overlayY + ((overlayImage.Height - baseImage.Height) / 2);
+
+            // Draw base image onto result bitmap
+            using (Graphics g = Graphics.FromImage(resultBitmap))
+            {
+                g.DrawImage((Image)baseImage, baseX, baseY);
+            }
+
+            // Set result bitmap as picture box image
+            pbResultImage.Image = resultBitmap;
+
         }
-      
-        private void Form1_Load(object sender, EventArgs e)
+
+        private void PosterOverlay_Load(object sender, EventArgs e)
         {
 
         }
