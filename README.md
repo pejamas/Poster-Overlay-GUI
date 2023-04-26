@@ -1,4 +1,4 @@
-# Poster Overlay Application
+# Poster Overlay GUI
 
 This is a simple Windows Forms application that allows users to select a base image (poster) and overlay it with an image of their choice.
 
