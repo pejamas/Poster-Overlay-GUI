@@ -12,7 +12,9 @@ This is a simple Windows Forms application that allows users to select a base im
 
 1. Clone the repository
 2. Open the solution in Visual Studio
-3. Build and run the application
+3. Update the file paths of the overlay images in the `cboOverlayImage_SelectedIndexChanged` method to match the location of your overlay files
+4. Build and run the application
+
 
 ## Usage
 
