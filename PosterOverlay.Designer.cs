@@ -28,14 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PosterOverlay));
             SuspendLayout();
             // 
             // PosterOverlay
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(539, 877);
-            Name = "Poster Overlay";
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Name = "PosterOverlay";
             Text = "Poster Overlay";
             Load += PosterOverlay_Load;
             ResumeLayout(false);

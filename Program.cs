@@ -11,6 +11,7 @@ namespace New_Overlay_GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
 
             // Create and show the form
             PosterOverlay form = new PosterOverlay();
