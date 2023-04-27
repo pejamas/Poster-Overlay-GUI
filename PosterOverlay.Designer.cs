@@ -1,4 +1,4 @@
-﻿namespace New_Overlay_GUI
+﻿namespace PosterOverlay
 {
     partial class PosterOverlay
     {

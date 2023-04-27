@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 
-namespace New_Overlay_GUI
+namespace PosterOverlay
 {
     public partial class PosterOverlay : Form
     {

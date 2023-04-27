@@ -1,8 +1,8 @@
-using New_Overlay_GUI;
+using PosterOverlay;
 using System;
 using System.Windows.Forms;
 
-namespace New_Overlay_GUI
+namespace PosterOverlay
 {
     static class Program
     {
