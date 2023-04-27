@@ -2,6 +2,8 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using System.IO;
+using System.Reflection;
 
 namespace New_Overlay_GUI
 {
@@ -155,20 +157,19 @@ namespace New_Overlay_GUI
             switch (cbo.SelectedIndex)
             {
                 case 0:
-                    // Update the file paths below to match the location of your overlay files
-                    overlayFilename = @"E:\Emby Posters\4k\Overlays\4K with DV and Imax.png";
+                    overlayFilename = @"OverlayImages\4K with DV and Imax.png";
                     break;
                 case 1:
-                    overlayFilename = @"E:\Emby Posters\4k\Overlays\4K with DV.png";
+                    overlayFilename = @"OverlayImages\4K with DV.png";
                     break;
                 case 2:
-                    overlayFilename = @"E:\Emby Posters\4k\Overlays\4K with HDR.png";
+                    overlayFilename = @"OverlayImages\4K with HDR.png";
                     break;
                 case 3:
-                    overlayFilename = @"E:\Emby Posters\4k\Overlays\4K-HDR with Imax.png";
+                    overlayFilename = @"OverlayImages\4K-HDR with Imax.png";
                     break;
                 case 4:
-                    overlayFilename = @"E:\Emby Posters\4k\Overlays\4K no HDR.png";
+                    overlayFilename = @"OverlayImages\4K no HDR.png";
                     break;
             }
             ApplyOverlay(overlayFilename);
@@ -176,11 +177,24 @@ namespace New_Overlay_GUI
 
         private void ApplyOverlay(string overlayFilename)
         {
+            string projectNameSpace = "New_Overlay_GUI";
+
             if (overlayFilename != "")
             {
                 overlayImagePath = overlayFilename;
                 Bitmap baseBitmap = pbResultImage.Image != null ? new Bitmap(pbResultImage.Image) : new Bitmap(1000, 1500);
-                Bitmap overlayBitmap = new Bitmap(overlayFilename);
+                Bitmap overlayBitmap;
+                string resourceName = $"{projectNameSpace}.{overlayFilename.Replace("\\", ".")}";
+                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+                {
+                    if (stream == null)
+                    {
+                        MessageBox.Show($"Error: Cannot find embedded resource '{resourceName}'");
+                        return;
+                    }
+                    overlayBitmap = new Bitmap(stream);
+                }
+
                 float scaleX = (float)baseBitmap.Width / overlayBitmap.Width;
                 float scaleY = (float)baseBitmap.Height / overlayBitmap.Height;
                 float scale = Math.Min(scaleX, scaleY);
