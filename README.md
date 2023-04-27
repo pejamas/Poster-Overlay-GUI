@@ -21,13 +21,6 @@ This is a simple Windows Forms application that allows users to add 4K Ultra HD 
 5. Preview the result in the main window.
 6. Click "Save Poster" to save the resulting image to your computer.
 
-## Usage
-
-1. Click on the "Select Poster" button to choose the base image (poster).
-2. Use the dropdown box to select an overlay image.
-3. Preview the result in the main window.
-4. Click "Save Poster" to save the resulting image to your computer.
-
 ## Prerequisites
 
 - [.NET 6.0 Runtime](https://dotnet.microsoft.com/download/dotnet/6.0/runtime) is required to run the application. Please download and install the appropriate version for your operating system.
