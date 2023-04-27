@@ -1,10 +1,10 @@
 # Poster Overlay GUI
 
-This is a simple Windows Forms application that allows users to select a base image (poster) and overlay it with an image of their choice.
+This is a simple Windows Forms application that allows users to add 4K Ultra HD Banners to their movie posters.
 
 ## Features
 
-- Choose from multiple overlay images
+- Choose from multiple overlay images (4k Ultra HD, with HDR, with DV, With HDR and IMAX and with DV and Imax)
 - Preview the combined result
 - Save the resulting image as a new file
 
@@ -12,9 +12,7 @@ This is a simple Windows Forms application that allows users to select a base im
 
 1. Clone the repository
 2. Open the solution in Visual Studio
-3. Update the file paths of the overlay images in the `cboOverlayImage_SelectedIndexChanged` method to match the location of your overlay files
-4. Build and run the application
-
+3. Build and run the application
 
 ## Usage
 
