@@ -4,7 +4,7 @@ This is a simple Windows Forms application that allows users to add 4K Ultra HD 
 
 ## Screenshots
 
-![Screenshot 1](Screenshots/Screenshot 1.png)
+![Screenshot 1](Screenshots/Screenshot%201.png)
 
 ## Features
 
