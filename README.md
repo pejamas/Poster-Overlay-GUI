@@ -2,6 +2,10 @@
 
 This is a simple Windows Forms application that allows users to add 4K Ultra HD Banners to their movie posters.
 
+## Screenshots
+
+![Main Interface](Screenshots/Screenshot 1.png)
+
 ## Features
 
 - Choose from multiple overlay images (4k Ultra HD, with HDR, with DV, With HDR and IMAX and with DV and Imax)
