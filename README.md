@@ -14,9 +14,12 @@ This is a simple Windows Forms application that allows users to add 4K Ultra HD 
 
 ## How to Use
 
-1. Clone the repository
-2. Open the solution in Visual Studio
-3. Build and run the application
+1. Download and extract the PosterOverlay_v1.0.0.zip file.
+2. Run the PosterOverlay.exe file to launch the application.
+3. Click on the "Select Poster" button to choose the base image (poster).
+4. Use the dropdown box to select an overlay image.
+5. Preview the result in the main window.
+6. Click "Save Poster" to save the resulting image to your computer.
 
 ## Usage
 
