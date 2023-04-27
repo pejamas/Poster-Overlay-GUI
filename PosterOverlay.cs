@@ -177,7 +177,7 @@ namespace PosterOverlay
 
         private void ApplyOverlay(string overlayFilename)
         {
-            string projectNameSpace = "New_Overlay_GUI";
+            string projectNameSpace = "PosterOverlay";
 
             if (overlayFilename != "")
             {
