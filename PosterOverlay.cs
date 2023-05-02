@@ -139,15 +139,18 @@ namespace PosterOverlay
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 baseImage = Image.FromFile(openFileDialog.FileName);
-                Bitmap bitmap = new Bitmap(baseImage);
-                Bitmap resizedBitmap = new Bitmap(1000, 1500);
-                using (Graphics graphics = Graphics.FromImage(resizedBitmap))
-                {
-                    graphics.DrawImage(bitmap, 0, 0, 1000, 1500);
-                }
-                pbResultImage.Image = resizedBitmap;
+                int maxWidth = 1000;
+                int maxHeight = 1500;
+                double ratioX = (double)maxWidth / baseImage.Width;
+                double ratioY = (double)maxHeight / baseImage.Height;
+                double ratio = Math.Min(ratioX, ratioY);
+                int newWidth = (int)(baseImage.Width * ratio);
+                int newHeight = (int)(baseImage.Height * ratio);
+                Bitmap bitmap = new Bitmap(baseImage, newWidth, newHeight);
+                pbResultImage.Image = bitmap;
             }
         }
+
 
         private void cboOverlayImage_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -177,24 +180,27 @@ namespace PosterOverlay
 
         private void ApplyOverlay(string overlayFilename)
         {
-            string projectNameSpace = "PosterOverlay";
-
             if (overlayFilename != "")
             {
                 overlayImagePath = overlayFilename;
                 Bitmap baseBitmap = pbResultImage.Image != null ? new Bitmap(pbResultImage.Image) : new Bitmap(1000, 1500);
-                Bitmap overlayBitmap;
-                string resourceName = $"{projectNameSpace}.{overlayFilename.Replace("\\", ".")}";
-                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+                if (baseImage != null)
                 {
-                    if (stream == null)
+                    int maxWidth = 1000;
+                    int maxHeight = 1500;
+                    double ratioX = (double)maxWidth / baseImage.Width;
+                    double ratioY = (double)maxHeight / baseImage.Height;
+                    double ratio = Math.Min(ratioX, ratioY);
+                    int resizedWidth = (int)(baseImage.Width * ratio);
+                    int resizedHeight = (int)(baseImage.Height * ratio);
+                    Bitmap resizedBitmap = new Bitmap(resizedWidth, resizedHeight);
+                    using (Graphics graphics = Graphics.FromImage(resizedBitmap))
                     {
-                        MessageBox.Show($"Error: Cannot find embedded resource '{resourceName}'");
-                        return;
+                        graphics.DrawImage(baseImage, 0, 0, resizedWidth, resizedHeight);
                     }
-                    overlayBitmap = new Bitmap(stream);
+                    baseBitmap = resizedBitmap;
                 }
-
+                Bitmap overlayBitmap = new Bitmap(overlayFilename);
                 float scaleX = (float)baseBitmap.Width / overlayBitmap.Width;
                 float scaleY = (float)baseBitmap.Height / overlayBitmap.Height;
                 float scale = Math.Min(scaleX, scaleY);
@@ -214,7 +220,6 @@ namespace PosterOverlay
                 pbResultImage.Image = resultBitmap;
             }
         }
-
         private void btnSaveImage_Click(object sender, EventArgs e)
         {
             if (baseImage == null || overlayImagePath == null)
@@ -224,12 +229,12 @@ namespace PosterOverlay
             }
 
             Image overlayImage = Image.FromFile((string)overlayImagePath);
-            Bitmap resultBitmap = new Bitmap(baseImage.Width, baseImage.Height, PixelFormat.Format32bppArgb);
+            Bitmap resultBitmap = new Bitmap(pbResultImage.Width, pbResultImage.Height, PixelFormat.Format32bppArgb);
 
             using (Graphics g = Graphics.FromImage(resultBitmap))
             {
-                g.DrawImage(baseImage, 0, 0);
-                g.DrawImage(overlayImage, 0, 0, baseImage.Width, baseImage.Height);
+                g.DrawImage(baseImage, 0, 0, pbResultImage.Width, pbResultImage.Height);
+                g.DrawImage(overlayImage, 0, 0, pbResultImage.Width, pbResultImage.Height);
             }
 
             pbResultImage.Image = resultBitmap;
@@ -244,7 +249,6 @@ namespace PosterOverlay
                 resultBitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
         }
-
         private void PosterOverlay_Load(object sender, EventArgs e)
         {
 
