@@ -13,6 +13,7 @@ namespace PosterOverlay
         private ComboBox cboOverlayImage;
         private Image baseImage;
         private object overlayImagePath;
+        private string currentFileandPath;
 
         public PosterOverlay()
         {
@@ -26,6 +27,7 @@ namespace PosterOverlay
             CreateOverlayImageComboBox();
             CreateBaseImageButton();
             CreateResultImagePictureBox();
+            CreateSaveAsImageButton();
             CreateSaveImageButton();
             CreateResetButton();
         }
@@ -39,11 +41,29 @@ namespace PosterOverlay
         {
             cboOverlayImage = new ComboBox();
             cboOverlayImage.Items.AddRange(new object[] {
-                "4K with DV and IMAX",
-                "4K with DV",
-                "4K with HDR",
-                "4K with HDR and IMAX",
-                "4K with no HDR"
+                "UHDBD with HDR and Atmos",
+                "UHDBD with DV and Atmos",
+                "UHDBD with HDR and DTS",
+                "UHDBD with DV and DTS",
+                "UHDBD with DV and IMAX",
+                "UHDBD with DV",
+                "UHDBD with HDR",
+                "UHDBD with HDR and IMAX",
+                "UHDBD with HDR10+",
+                "UHDBD with HDR10+ and IMAX",
+                "UHDBD with IMAX",
+                "UHDBD",
+                "BD with DV and IMAX",
+                "BD with DV",
+                "BD with HDR",
+                "BD with HDR and IMAX",
+                "BD with HDR10+",
+                "BD with HDR10+ and IMAX",
+                "BD with IMAX",
+                "BD 3D",
+                "BD 3D with IMAX",
+                "BD",
+                "DTheater"
             });
             cboOverlayImage.Size = new Size(160, 23);
             cboOverlayImage.Location = new Point(193, 17);
@@ -86,11 +106,27 @@ namespace PosterOverlay
             Controls.Add(pbResultImage);
         }
 
+        private void CreateSaveAsImageButton()
+        {
+            Button btnSaveAsImage = new Button
+            {
+                Text = "Save as...",
+                Size = cboOverlayImage.Size,
+                Location = new Point(365, 842),
+                BackColor = Color.LightGray,
+                ForeColor = Color.Black,
+                Font = new Font("Arial", 10, FontStyle.Regular),
+                FlatStyle = FlatStyle.Flat
+            };
+            btnSaveAsImage.Click += new EventHandler(btnSaveAsImage_Click);
+            Controls.Add(btnSaveAsImage);
+        }
+
         private void CreateSaveImageButton()
         {
             Button btnSaveImage = new Button
             {
-                Text = "Save Poster",
+                Text = "Save",
                 Size = cboOverlayImage.Size,
                 Location = new Point(365, 17),
                 BackColor = Color.LightGray,
@@ -109,8 +145,8 @@ namespace PosterOverlay
                 Text = "Reset",
                 Size = cboOverlayImage.Size,
                 Location = new Point(190, 842),
-                BackColor = Color.LightGray,
-                ForeColor = Color.Black,
+                BackColor = Color.Red,
+                ForeColor = Color.White,
                 Font = new Font("Arial", 10, FontStyle.Regular),
                 FlatStyle = FlatStyle.Flat
             };
@@ -128,6 +164,9 @@ namespace PosterOverlay
         {
             cboOverlayImage.SelectedIndex = -1;
             pbResultImage.Image = null;
+
+            //Clear the base image so overwriting it is possible
+            baseImage.Dispose();
         }
 
         private void btnBaseImage_Click(object sender, EventArgs e)
@@ -138,44 +177,113 @@ namespace PosterOverlay
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                baseImage = Image.FromFile(openFileDialog.FileName);
-                int maxWidth = 1000;
-                int maxHeight = 1500;
-                double ratioX = (double)maxWidth / baseImage.Width;
-                double ratioY = (double)maxHeight / baseImage.Height;
-                double ratio = Math.Min(ratioX, ratioY);
-                int newWidth = (int)(baseImage.Width * ratio);
-                int newHeight = (int)(baseImage.Height * ratio);
-                Bitmap bitmap = new Bitmap(baseImage, newWidth, newHeight);
-                pbResultImage.Image = bitmap;
+                //Load the base image using method
+                LoadBaseImage(openFileDialog.FileName);
+
+                //Ensure we save the current filename and path so we can do quick overwrites later
+                currentFileandPath = openFileDialog.FileName;
             }
         }
 
-
-        private void cboOverlayImage_SelectedIndexChanged(object sender, EventArgs e)
+        private void LoadBaseImage(string filenameAndPath)
         {
-            ComboBox cbo = (ComboBox)sender;
+            baseImage = Image.FromFile(filenameAndPath);
+            int maxWidth = 1000;
+            int maxHeight = 1500;
+            double ratioX = (double)maxWidth / baseImage.Width;
+            double ratioY = (double)maxHeight / baseImage.Height;
+            double ratio = Math.Min(ratioX, ratioY);
+            int newWidth = (int)(baseImage.Width * ratio);
+            int newHeight = (int)(baseImage.Height * ratio);
+            Bitmap bitmap = new Bitmap(baseImage, newWidth, newHeight);
+            pbResultImage.Image = bitmap;
+
+            //Select whatever Overlay is currently selected in the dropdown list as the one to apply when base image is loaded
+            SelectOverlay();
+        }
+
+        private void SelectOverlay()
+        {
             string overlayFilename = "";
 
-            switch (cbo.SelectedIndex)
+            switch (cboOverlayImage.SelectedIndex)
             {
                 case 0:
-                    overlayFilename = @"OverlayImages\4K with DV and Imax.png";
+                    overlayFilename = @"OverlayImages\UHDBD with HDR and Atmos.png";
                     break;
                 case 1:
-                    overlayFilename = @"OverlayImages\4K with DV.png";
+                    overlayFilename = @"OverlayImages\UHDBD with DV and Atmos.png";
                     break;
                 case 2:
-                    overlayFilename = @"OverlayImages\4K with HDR.png";
+                    overlayFilename = @"OverlayImages\UHDBD with HDR and DTS.png";
                     break;
                 case 3:
-                    overlayFilename = @"OverlayImages\4K-HDR with Imax.png";
+                    overlayFilename = @"OverlayImages\UHDBD with DV and DTS.png";
                     break;
                 case 4:
-                    overlayFilename = @"OverlayImages\4K no HDR.png";
+                    overlayFilename = @"OverlayImages\UHDBD with DV and Imax.png";
+                    break;
+                case 5:
+                    overlayFilename = @"OverlayImages\UHDBD with DV.png";
+                    break;
+                case 6:
+                    overlayFilename = @"OverlayImages\UHDBD with HDR.png";
+                    break;
+                case 7:
+                    overlayFilename = @"OverlayImages\UHDBD with HDR and Imax.png";
+                    break;
+                case 8:
+                    overlayFilename = @"OverlayImages\UHDBD with HDR10+.png";
+                    break;
+                case 9:
+                    overlayFilename = @"OverlayImages\UHDBD with HDR10+ and Imax.png";
+                    break;
+                case 10:
+                    overlayFilename = @"OverlayImages\UHDBD with Imax.png";
+                    break;
+                case 11:
+                    overlayFilename = @"OverlayImages\UHDBD.png";
+                    break;
+                case 12:
+                    overlayFilename = @"OverlayImages\BD with DV and Imax.png";
+                    break;
+                case 13:
+                    overlayFilename = @"OverlayImages\BD with DV.png";
+                    break;
+                case 14:
+                    overlayFilename = @"OverlayImages\BD with HDR.png";
+                    break;
+                case 15:
+                    overlayFilename = @"OverlayImages\BD with HDR and Imax.png";
+                    break;
+                case 16:
+                    overlayFilename = @"OverlayImages\BD with HDR10+.png";
+                    break;
+                case 17:
+                    overlayFilename = @"OverlayImages\BD with HDR10+ and Imax.png";
+                    break;
+                case 18:
+                    overlayFilename = @"OverlayImages\BD with Imax.png";
+                    break;
+                case 19:
+                    overlayFilename = @"OverlayImages\BD 3D.png";
+                    break;
+                case 20:
+                    overlayFilename = @"OverlayImages\BD 3D with IMAX.png";
+                    break;
+                case 21:
+                    overlayFilename = @"OverlayImages\BD.png";
+                    break;
+                case 22:
+                    overlayFilename = @"OverlayImages\DTheater.png";
                     break;
             }
             ApplyOverlay(overlayFilename);
+        }
+
+        private void cboOverlayImage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SelectOverlay();
         }
 
         private void ApplyOverlay(string overlayFilename)
@@ -220,6 +328,48 @@ namespace PosterOverlay
                 pbResultImage.Image = resultBitmap;
             }
         }
+        private void btnSaveAsImage_Click(object sender, EventArgs e)
+        {
+            if (baseImage == null || overlayImagePath == null)
+            {
+                MessageBox.Show("Please select a base image and overlay image.", "Error");
+                return;
+            }
+
+            Image overlayImage = Image.FromFile((string)overlayImagePath);
+            int targetWidth = 1000;
+            int targetHeight = 1500;
+
+            Bitmap resultBitmap = new Bitmap(targetWidth, targetHeight, PixelFormat.Format32bppArgb);
+
+            using (Graphics g = Graphics.FromImage(resultBitmap))
+            {
+                g.DrawImage(baseImage, 0, 0, targetWidth, targetHeight);
+                g.DrawImage(overlayImage, 0, 0, targetWidth, targetHeight);
+            }
+
+            pbResultImage.Image = resultBitmap;
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "JPEG Image (*.jpg)|*.jpg|PNG Image (*.png)|*.png",
+                DefaultExt = "jpg" // Default extension
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Clear the base image to allow overwriting
+                baseImage.Dispose();
+
+                // Save the new image in the desired size
+                resultBitmap.Save(saveFileDialog.FileName, ImageFormat.Jpeg);
+
+                // Reload the now updated base image to continue working with it if needed
+                LoadBaseImage(saveFileDialog.FileName);
+            }
+        }
+
+
         private void btnSaveImage_Click(object sender, EventArgs e)
         {
             if (baseImage == null || overlayImagePath == null)
@@ -229,25 +379,49 @@ namespace PosterOverlay
             }
 
             Image overlayImage = Image.FromFile((string)overlayImagePath);
-            Bitmap resultBitmap = new Bitmap(pbResultImage.Width, pbResultImage.Height, PixelFormat.Format32bppArgb);
+
+            // Zielgröße für das Bild festlegen
+            int targetWidth = 1000;
+            int targetHeight = 1500;
+
+            // Erstellen eines neuen Bitmaps mit der Zielgröße
+            Bitmap resultBitmap = new Bitmap(targetWidth, targetHeight, PixelFormat.Format32bppArgb);
 
             using (Graphics g = Graphics.FromImage(resultBitmap))
             {
-                g.DrawImage(baseImage, 0, 0, pbResultImage.Width, pbResultImage.Height);
-                g.DrawImage(overlayImage, 0, 0, pbResultImage.Width, pbResultImage.Height);
+                // Basisbild und Overlay-Bild skalieren und zeichnen
+                g.DrawImage(baseImage, 0, 0, targetWidth, targetHeight);
+                g.DrawImage(overlayImage, 0, 0, targetWidth, targetHeight);
             }
 
             pbResultImage.Image = resultBitmap;
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            // Basisbild freigeben, um das Überschreiben zu ermöglichen
+            baseImage.Dispose();
+
+            // Neues Bild im aktuellen Pfad und Ursprungsformat speichern
+            string extension = Path.GetExtension(currentFileandPath).ToLower();
+            ImageFormat imageFormat;
+
+            // Format basierend auf Dateierweiterung bestimmen
+            switch (extension)
             {
-                Filter = "Image Files (*.jpg;*.png)|*.jpg;*.png|All files (*.*)|*.*",
-                DefaultExt = "png"
-            };
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                resultBitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
+                case ".png":
+                    imageFormat = ImageFormat.Png;
+                    break;
+                case ".jpg":
+                case ".jpeg":
+                    imageFormat = ImageFormat.Jpeg;
+                    break;
+                default:
+                    MessageBox.Show("Unsupported file format.", "Error");
+                    return;
             }
+
+            resultBitmap.Save(currentFileandPath, imageFormat);
+
+            // Aktualisiertes Basisbild neu laden, falls es weiterverwendet werden soll
+            LoadBaseImage(currentFileandPath);
         }
         private void PosterOverlay_Load(object sender, EventArgs e)
         {

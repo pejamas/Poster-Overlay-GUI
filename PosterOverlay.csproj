@@ -1,40 +1,100 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <RootNamespace>PosterOverlay</RootNamespace>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>PosterOverlay.ico</ApplicationIcon>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows7.0</TargetFramework>
+		<RootNamespace>PosterOverlay</RootNamespace>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationIcon>PosterOverlay.ico</ApplicationIcon>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="OverlayImages\4K no HDR.png" />
-    <None Remove="OverlayImages\4K with DV and Imax.png" />
-    <None Remove="OverlayImages\4K with DV.png" />
-    <None Remove="OverlayImages\4K with HDR.png" />
-    <None Remove="OverlayImages\4K-HDR with Imax.png" />
-  </ItemGroup>
+	<ItemGroup>
+    <None Remove="OverlayImages\UHDBD with HDR and Atmos.png" />
+    <None Remove="OverlayImages\UHDBD with DV and Atmos.png" />
+    <None Remove="OverlayImages\UHDBD with HDR and DTS.png" />
+    <None Remove="OverlayImages\UHDBD with DV and DTS.png" />  
+		<None Remove="OverlayImages\UHDBD.png" />
+		<None Remove="OverlayImages\UHDBD with DV and Imax.png" />
+		<None Remove="OverlayImages\UHDBD with DV.png" />
+		<None Remove="OverlayImages\UHDBD with HDR.png" />
+		<None Remove="OverlayImages\UHDBD with HDR and Imax.png" />
+		<None Remove="OverlayImages\UHDBD with HDR10+.png" />
+		<None Remove="OverlayImages\UHDBD with HDR10+ and Imax.png" />
+		<None Remove="OverlayImages\UHDBD with Imax.png" />
+		<None Remove="OverlayImages\BD with DV and Imax.png" />
+		<None Remove="OverlayImages\BD with DV.png" />
+		<None Remove="OverlayImages\BD with HDR.png" />
+		<None Remove="OverlayImages\BD with HDR and Imax.png" />
+		<None Remove="OverlayImages\BD with HDR10+.png" />
+		<None Remove="OverlayImages\BD with HDR10+ and Imax.png" />
+		<None Remove="OverlayImages\BD with Imax.png" />
+		<None Remove="OverlayImages\BD 3D with IMAX.png" />
+		<None Remove="OverlayImages\BD 3D.png" />
+		<None Remove="OverlayImages\BD.png" />
+		<None Remove="OverlayImages\DTheater.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="OverlayImages\4K no HDR.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OverlayImages\4K with DV and Imax.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OverlayImages\4K with DV.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OverlayImages\4K with HDR.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OverlayImages\4K-HDR with Imax.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <Content Include="PosterOverlay.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="OverlayImages\UHDBD.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\UHDBD with DV and Imax.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\UHDBD with DV.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\UHDBD with HDR.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\UHDBD with HDR and Imax.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\UHDBD with HDR10+.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\UHDBD with HDR10+ and Imax.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\UHDBD with Imax.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD with DV and Imax.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD with DV.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD with HDR.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD with HDR and Imax.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD with HDR10+.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD with HDR10+ and Imax.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD with Imax.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD 3D with IMAX.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD 3D.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\BD.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="OverlayImages\DTheater.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<Content Include="PosterOverlay.ico" />
+	</ItemGroup>
 
 </Project>
